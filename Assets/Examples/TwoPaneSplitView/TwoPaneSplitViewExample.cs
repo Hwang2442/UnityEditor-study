@@ -7,11 +7,12 @@ public class TwoPaneSplitViewExample : EditorWindow
     [SerializeField]
     private StyleSheet m_StyleSheet = default;
 
-    [MenuItem("Window/UI Toolkit/TwoPaneSplitViewExample")]
-    public static void ShowExample()
+    [MenuItem("Study/Editor Windows/TwoPaneSplitViewExample")]
+    public static void Show()
     {
         TwoPaneSplitViewExample wnd = GetWindow<TwoPaneSplitViewExample>();
         wnd.titleContent = new GUIContent("TwoPaneSplitViewExample");
+        wnd.minSize = new Vector2(800, 600);
     }
 
     public void CreateGUI()
@@ -19,14 +20,18 @@ public class TwoPaneSplitViewExample : EditorWindow
         // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
 
-        // VisualElements objects can contain other VisualElement following a tree hierarchy.
-        VisualElement label = new Label("Hello World! From C#");
-        root.Add(label);
+        var mainContainer = new TwoPaneSplitView(0, 300, TwoPaneSplitViewOrientation.Horizontal);
+        root.Add(mainContainer);
 
-        // Add label
-        VisualElement labelWithStyle = new Label("Hello World! With Style");
-        labelWithStyle.AddToClassList("custom-label");
-        labelWithStyle.styleSheets.Add(m_StyleSheet);
-        root.Add(labelWithStyle);
+        // Left
+        VisualElement leftContainer = new VisualElement();
+        leftContainer.name = "left";
+        leftContainer.style.minWidth = 300;
+        mainContainer.Add(leftContainer);
+
+        // Right
+        VisualElement rightContainer = new VisualElement();
+        rightContainer.name = "right";
+        mainContainer.Add(rightContainer);
     }
 }
