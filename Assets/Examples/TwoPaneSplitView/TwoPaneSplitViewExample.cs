@@ -17,12 +17,16 @@ public class TwoPaneSplitViewExample : EditorWindow
 
     public void CreateGUI()
     {
-        // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
+        //CreateTwoPanelSplitView(root);
+        CreateThreePanelSplitView(root);
+    }
 
+    private void CreateTwoPanelSplitView(VisualElement parent)
+    {
         // Main
         var mainContainer = new TwoPaneSplitView(0, 300, TwoPaneSplitViewOrientation.Horizontal);
-        root.Add(mainContainer);
+        parent.Add(mainContainer);
 
         // Left
         VisualElement leftContainer = new VisualElement();
@@ -36,6 +40,35 @@ public class TwoPaneSplitViewExample : EditorWindow
         rightContainer.name = "right";
         rightContainer.Add(CreateLabel("Right"));
         mainContainer.Add(rightContainer);
+    }
+
+    private void CreateThreePanelSplitView(VisualElement parent)
+    {
+        // Left & Mid
+        var leftMidContainer = new TwoPaneSplitView(0, 300, TwoPaneSplitViewOrientation.Horizontal);
+        var midRightContainer = new TwoPaneSplitView(0, 300, TwoPaneSplitViewOrientation.Horizontal);
+        parent.Add(leftMidContainer);
+
+        // Left
+        VisualElement leftContainer = new VisualElement();
+        leftContainer.name = "left";
+        leftContainer.style.minWidth = 300;
+        leftContainer.Add(CreateLabel("Left"));
+        leftMidContainer.Add(leftContainer);
+        leftMidContainer.Add(midRightContainer);
+
+        // Mid
+        VisualElement middleContainer = new VisualElement();
+        middleContainer.name = "Middle";
+        middleContainer.style.minWidth = 300;
+        middleContainer.Add(CreateLabel("Middle"));
+        midRightContainer.Add(middleContainer);
+
+        // Right
+        VisualElement rightContainer = new VisualElement();
+        rightContainer.name = "right";
+        rightContainer.Add(CreateLabel("Right"));
+        midRightContainer.Add(rightContainer);
     }
 
     private Label CreateLabel(string text)
