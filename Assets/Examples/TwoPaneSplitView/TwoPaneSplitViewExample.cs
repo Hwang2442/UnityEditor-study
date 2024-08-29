@@ -20,6 +20,7 @@ public class TwoPaneSplitViewExample : EditorWindow
         // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
 
+        // Main
         var mainContainer = new TwoPaneSplitView(0, 300, TwoPaneSplitViewOrientation.Horizontal);
         root.Add(mainContainer);
 
@@ -27,11 +28,18 @@ public class TwoPaneSplitViewExample : EditorWindow
         VisualElement leftContainer = new VisualElement();
         leftContainer.name = "left";
         leftContainer.style.minWidth = 300;
+        leftContainer.Add(CreateLabel("Left"));
         mainContainer.Add(leftContainer);
 
         // Right
         VisualElement rightContainer = new VisualElement();
         rightContainer.name = "right";
+        rightContainer.Add(CreateLabel("Right"));
         mainContainer.Add(rightContainer);
+    }
+
+    private Label CreateLabel(string text)
+    {
+        return new Label(text);
     }
 }
